@@ -4,8 +4,12 @@ const PessoaController = require("../controllers/PessoaController")
 const router = Router()
 router
     .get('/pessoas', PessoaController.pegarTodasAsPessoas)
-    .post('/pessoas', PessoaController.criaPessoa)
+    .post('/pessoas', PessoaController.criarPessoa)
     .put('/pessoas/:id', PessoaController.atualizarPessoa)
     .delete('/pessoas/:id', PessoaController.deletarPessoa)
     .get('/pessoas/:id', PessoaController.pegarUmaPessoa)
+    .get('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.pegaUmaMatricula)
+    .post('/pessoas/:estudanteId/matricula/', PessoaController.criarMatricula)
+    .put('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.atualizarMatricula)
+    .delete('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.apagaMatricula)
 module.exports = router
