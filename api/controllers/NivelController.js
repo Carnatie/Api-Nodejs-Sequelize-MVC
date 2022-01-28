@@ -3,6 +3,7 @@ const database = require('../models')
 
 class NivelController {
     static async pegaTodasOsNiveis(req, res) {
+        paranoid: false
         try {
             const todosOsNiveis = await database.Niveis.findAll()
             return res.status(200).json(todosOsNiveis)

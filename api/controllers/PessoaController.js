@@ -4,15 +4,26 @@ const {
 const database = require('../models')
 
 class PessoaController {
-    static async pegarTodasAsPessoas(req, res) {
+    static async pegarTodasAsPessoasAtivas(req, res) {
         paranoid: false
         try {
-            const todasAsPessoas = await database.Pessoas.findAll()
-            return res.status(200).json(todasAsPessoas)
+            const todasAsPessoasAtivas = await database.Pessoas.findAll()
+            return res.status(200).json(todasAsPessoasAtivas)
         } catch (error) {
             return res.status(500).json(error.message)
         }
     }
+
+     static async pegarTodasAsPessoas(req, res) {
+         paranoid: false
+         try {
+             const todasAsPessoas = await database.Pessoas.scope('todos').findAll()
+             return res.status(200).json(todasAsPessoas)
+         } catch (error) {
+             return res.status(500).json(error.message)
+         }
+    }
+
 
     static async pegarUmaPessoa(req, res) {
         const {

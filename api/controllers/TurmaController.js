@@ -3,6 +3,7 @@ const database = require('../models')
 
 class TurmaController {
     static async pegaTodasAsTurmas(req, res) {
+        paranoid: false
         try {
             const todasAsTurmas = await database.Turmas.findAll()
             return res.status(200).json(todasAsTurmas)
