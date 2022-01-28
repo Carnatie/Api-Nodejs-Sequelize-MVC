@@ -9,18 +9,36 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'docente_id'
       })
       Pessoas.hasMany(models.Matriculas, {
-        foreignKey:'estudante_id'
+        foreignKey: 'estudante_id'
       })
     }
   };
   Pessoas.init({
     nome: DataTypes.STRING,
     ativo: DataTypes.BOOLEAN,
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Dados do tipo e-mail inválido',
+        },
+      }
+    },
     role: DataTypes.STRING
   }, {
     sequelize,
     paranoid: true,
+    defaultScope: {
+      where: {
+        ativo: true
+      }
+    },
+    scopes: {
+      todos: {
+        where: {}
+      },
+    },
     modelName: 'Pessoas',
   });
   return Pessoas;
