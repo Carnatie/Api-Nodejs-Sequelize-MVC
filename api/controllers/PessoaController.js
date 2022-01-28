@@ -5,6 +5,7 @@ const database = require('../models')
 
 class PessoaController {
     static async pegarTodasAsPessoas(req, res) {
+        paranoid: false
         try {
             const todasAsPessoas = await database.Pessoas.findAll()
             return res.status(200).json(todasAsPessoas)
@@ -73,6 +74,24 @@ class PessoaController {
             })
             return res.status(200).json({
                 mensagem: `id ${id} deletado`
+            })
+        } catch (error) {
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async restaurarPessoa(req, res) {
+        const {
+            id
+        } = req.params
+        try {
+            await database.Pessoas.restore({
+                where: {
+                    id: Number(id)
+                }
+            })
+            return res.status(200).json({
+                mensagem: `id ${id} Restaurado`
             })
         } catch (error) {
             return res.status(500).json(error.message)
@@ -151,6 +170,25 @@ class PessoaController {
             })
             return res.status(200).json({
                 mensagem: `id ${matriculaId} deletado`
+            })
+        } catch (error) {
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async restaurarMatricula(req, res) {
+        const {
+            estudanteId,
+            matriculaId
+        } = req.params
+        try {
+            await database.Matriculas.restore({
+                where: {
+                    id: Number(matriculaId),
+                }
+            })
+            return res.status(200).json({
+                mensagem: `id ${matriculaId} Restaurado`
             })
         } catch (error) {
             return res.status(500).json(error.message)
