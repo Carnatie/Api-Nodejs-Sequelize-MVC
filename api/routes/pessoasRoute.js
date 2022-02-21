@@ -3,6 +3,7 @@ const PessoaController = require("../controllers/PessoaController")
 
 const router = Router()
 router
+    // pessoas
     .get('/pessoas', PessoaController.pegarTodasAsPessoasAtivas)
     .get('/pessoas/todos', PessoaController.pegarTodasAsPessoas)
     .post('/pessoas', PessoaController.criarPessoa)
@@ -10,7 +11,9 @@ router
     .delete('/pessoas/:id', PessoaController.deletarPessoa)
     .post('/pessoas/:id/restaura', PessoaController.restaurarPessoa)
     .get('/pessoas/:id', PessoaController.pegarUmaPessoa)
+    //matriculas
     .get('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.pegaUmaMatricula)
+    .get("/pessoas/:estudanteId/matricula", PessoaController.pegaMatriculas)
     .post('/pessoas/:estudanteId/matricula/', PessoaController.criarMatricula)
     .put('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.atualizarMatricula)
     .delete('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.apagaMatricula)
