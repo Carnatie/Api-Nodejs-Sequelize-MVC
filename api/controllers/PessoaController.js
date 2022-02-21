@@ -1,5 +1,6 @@
 const {
-    NUMBER
+    NUMBER,
+    where
 } = require('sequelize')
 const database = require('../models')
 
@@ -14,14 +15,14 @@ class PessoaController {
         }
     }
 
-     static async pegarTodasAsPessoas(req, res) {
-         paranoid: false
-         try {
-             const todasAsPessoas = await database.Pessoas.scope('todos').findAll()
-             return res.status(200).json(todasAsPessoas)
-         } catch (error) {
-             return res.status(500).json(error.message)
-         }
+    static async pegarTodasAsPessoas(req, res) {
+        paranoid: false
+        try {
+            const todasAsPessoas = await database.Pessoas.scope('todos').findAll()
+            return res.status(200).json(todasAsPessoas)
+        } catch (error) {
+            return res.status(500).json(error.message)
+        }
     }
 
 
@@ -133,7 +134,11 @@ class PessoaController {
             matriculaId
         } = req.params
         try {
-            const pessoa = await database.Pessoas.findOne({ where: { id: Number(estudanteId)} })
+            const pessoa = await database.Pessoas.findOne({
+                where: {
+                    id: Number(estudanteId)
+                }
+            })
             const matriculas = await pessoa.getAulasMatriculadas()
             return res.status(200).json(matriculas)
         } catch (error) {
@@ -179,7 +184,7 @@ class PessoaController {
         } catch (error) {
             return res.status(500).json(error.message)
         }
-        
+
     }
     static async apagaMatricula(req, res) {
         const {
@@ -214,6 +219,26 @@ class PessoaController {
             return res.status(200).json({
                 mensagem: `id ${matriculaId} Restaurado`
             })
+        } catch (error) {
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async pegaMatriculasPorTurma(req, res) {
+        const {
+            turmaId
+        } = req.params
+        try {
+            const todasAsMatriculas = await database.Matriculas.findAndCountAll({
+                where: {
+                    turma_id: Number(turmaId),
+                    status: 'confirmado'
+                },
+                limit: 20,
+                order:[['estudante_id', 'ASC']]
+            })
+
+            return res.status(200).json(todasAsMatriculas)
         } catch (error) {
             return res.status(500).json(error.message)
         }

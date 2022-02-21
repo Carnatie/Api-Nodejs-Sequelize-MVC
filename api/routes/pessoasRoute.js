@@ -13,7 +13,8 @@ router
     .get('/pessoas/:id', PessoaController.pegarUmaPessoa)
     //matriculas
     .get('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.pegaUmaMatricula)
-    .get("/pessoas/:estudanteId/matricula", PessoaController.pegaMatriculas)
+    .get('/pessoas/:estudanteId/matricula', PessoaController.pegaMatriculas)
+    .get('/pessoas/matricula/:turmaId/confirmados', PessoaController.pegaMatriculasPorTurma)
     .post('/pessoas/:estudanteId/matricula/', PessoaController.criarMatricula)
     .put('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.atualizarMatricula)
     .delete('/pessoas/:estudanteId/matricula/:matriculaId', PessoaController.apagaMatricula)
