@@ -243,6 +243,16 @@ class PessoaController {
             return res.status(500).json(error.message)
         }
     }
+        static async pegaTurmasLotadas(req, res) {
+        const lotaçãoTurma = 2
+        const {
+            turmaId
+        } = req.params
+        try {
+        } catch (error) {
+            return res.status(500).json(error.message)
+        }
+    }
 }
 
 module.exports = PessoaController
